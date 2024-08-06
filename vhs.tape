@@ -44,7 +44,7 @@ Output vhs.gif
 Output vhs.mp4
 Output vhs.webm
 
-Set FontSize 46
+Set FontSize 30
 Set Width 1200
 Set Height 600
 Set PlaybackSpeed 2
