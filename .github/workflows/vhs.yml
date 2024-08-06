@@ -3,6 +3,10 @@ on:
   push:
     paths:
       - vhs.tape
+
+permissions:
+  contents: write
+
 jobs:
   vhs:
     runs-on: ubuntu-latest
