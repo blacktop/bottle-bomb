@@ -66,6 +66,11 @@ type Formula struct {
 					URL    string `json:"url"`
 					Sha256 string `json:"sha256"`
 				} `json:"monterey"`
+				Arm64Linux struct {
+					Cellar string `json:"cellar"`
+					URL    string `json:"url"`
+					Sha256 string `json:"sha256"`
+				} `json:"arm64_linux"`
 				X8664Linux struct {
 					Cellar string `json:"cellar"`
 					URL    string `json:"url"`

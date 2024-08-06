@@ -28,7 +28,6 @@ import (
 	"net/http"
 	"os"
 
-	"github.com/charmbracelet/bubbles/progress"
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/log"
 	"github.com/spf13/cobra"
@@ -39,35 +38,47 @@ const (
 	bottleAPI = "https://ghcr.io/v2/homebrew/core/%s/manifests/%s" // 1st %s is the formula name; 2nd %s is the version
 )
 
+var logger *log.Logger
+
+func getFormula(in string) (*Formula, error) {
+	req, err := http.NewRequest("GET", fmt.Sprintf(brewAPI, in), nil)
+	if err != nil {
+		panic(err)
+	}
+	// req.Header.Add("Authorization", "Bearer QQ==")
+	// req.Header.Set("Accept", "application/vnd.oci.image.index.v1+json")
+	req.Header.Set("Accept", "application/json")
+	resp, err := http.DefaultClient.Do(req)
+	if err != nil {
+		panic(err)
+	}
+	defer resp.Body.Close()
+
+	body, err := io.ReadAll(resp.Body)
+	if err != nil {
+		panic(err)
+	}
+
+	var formula Formula
+	if err := json.Unmarshal(body, &formula); err != nil {
+		panic(err)
+	}
+
+	return &formula, nil
+}
+
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
 	Use:   "bottle-bomb",
 	Short: "Download a homebrew bottle and install it",
-	Args:  cobra.ExactArgs(1),
+	// Args:  cobra.ExactArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
-		logger := log.New(os.Stderr)
 
-		req, err := http.NewRequest("GET", fmt.Sprintf(brewAPI, args[0]), nil)
+		formula, err := getFormula("bat")
+		// formula, err := getFormula(args[0])
 		if err != nil {
 			panic(err)
 		}
-		// req.Header.Add("Authorization", "Bearer QQ==")
-		// req.Header.Set("Accept", "application/vnd.oci.image.index.v1+json")
-		req.Header.Set("Accept", "application/json")
-		resp, err := http.DefaultClient.Do(req)
-		if err != nil {
-			panic(err)
-		}
-		defer resp.Body.Close()
-		body, err := io.ReadAll(resp.Body)
-		if err != nil {
-			panic(err)
-		}
-		var formula Formula
-		if err := json.Unmarshal(body, &formula); err != nil {
-			panic(err)
-		}
-		// fmt.Println(formula)
 
 		if len(formula.Dependencies) > 0 {
 			for _, dep := range formula.Dependencies {
@@ -75,47 +86,8 @@ var rootCmd = &cobra.Command{
 			}
 		}
 
-		if formula.Bottle.Stable.Files.Arm64Sonoma.URL == "" {
-			logger.Fatal("No bottle for macOS Sonoma (arm64)")
-		}
-
-		dlreq, err := http.NewRequest("GET", formula.Bottle.Stable.Files.Arm64Sonoma.URL, nil)
-		if err != nil {
-			panic(err)
-		}
-		dlreq.Header.Add("Authorization", "Bearer QQ==")
-		resp, err = http.DefaultClient.Do(dlreq)
-		if err != nil {
-			panic(err)
-		}
-		defer resp.Body.Close()
-
-		f, err := os.Create(args[0] + ".tar.gz")
-		if err != nil {
-			panic(err)
-		}
-		defer f.Close()
-
-		pw := &progressWriter{
-			total:  int(resp.ContentLength),
-			file:   f,
-			reader: resp.Body,
-			onProgress: func(ratio float64) {
-				p.Send(progressMsg(ratio))
-			},
-		}
-
-		m := model{
-			pw:       pw,
-			progress: progress.New(progress.WithDefaultGradient()),
-		}
 		// Start Bubble Tea
-		p = tea.NewProgram(m)
-
-		// Start the download
-		go pw.Start()
-
-		if _, err := p.Run(); err != nil {
+		if _, err := tea.NewProgram(initialModel(formula)).Run(); err != nil {
 			fmt.Println("error running program:", err)
 			os.Exit(1)
 		}
@@ -136,7 +108,7 @@ func init() {
 	// Here you will define your flags and configuration settings.
 	// Cobra supports persistent flags, which, if defined here,
 	// will be global for your application.
-
+	logger = log.New(os.Stderr)
 	// rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is $HOME/.bottle-bomb.yaml)")
 
 	// Cobra also supports local flags, which will only run
