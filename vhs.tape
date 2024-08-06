@@ -51,11 +51,11 @@ Set PlaybackSpeed 2
 
 Type "bb bat"
 
-Sleep 500ms
+Sleep 2s
 
 Enter
 
-Sleep 500ms
+Sleep 2s
 
 Enter
 
