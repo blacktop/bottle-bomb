@@ -57,10 +57,13 @@ Enter
 
 Sleep 3s
 
-Down 2
+Down 1
 Sleep 500ms
-Up 2
+Down 1
 Sleep 500ms
+Up 1
+Sleep 500ms
+Up 1
 
 Sleep 2s
 
