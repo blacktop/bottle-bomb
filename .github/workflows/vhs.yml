@@ -3,6 +3,7 @@ on:
   push:
     paths:
       - vhs.tape
+      - .github/workflows/vhs.yml
 
 permissions:
   contents: write
