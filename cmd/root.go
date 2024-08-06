@@ -69,13 +69,12 @@ func getFormula(in string) (*Formula, error) {
 
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
-	Use:   "bottle-bomb",
+	Use:   "bottle-bomb <formula>",
 	Short: "Download a homebrew bottle and install it",
-	// Args:  cobra.ExactArgs(1),
+	Args:  cobra.ExactArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
 
-		formula, err := getFormula("bat")
-		// formula, err := getFormula(args[0])
+		formula, err := getFormula(args[0])
 		if err != nil {
 			panic(err)
 		}
@@ -93,7 +92,8 @@ var rootCmd = &cobra.Command{
 			fmt.Println("error running program:", err)
 			os.Exit(1)
 		}
-		logger.Info("Creating", "file", fmt.Sprintf("%s.tar.gz", args[0]))
+
+		logger.Info("Creating", "file", fmt.Sprintf("%s.tar.gz", formula.Name))
 	},
 }
 

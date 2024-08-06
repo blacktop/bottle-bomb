@@ -27,3 +27,4 @@ go.work.sum
 dist/
 .DS_Store
 *.tar.gz
+bb

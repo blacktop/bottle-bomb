@@ -12,6 +12,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: "stable"
+      - name: Build
+        run: make build
       - uses: charmbracelet/vhs-action@v2
         with:
           path: 'vhs.tape'
