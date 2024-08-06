@@ -53,15 +53,15 @@ Type "bb bat"
 
 Sleep 2s
 
+Enter
+
 Down 2
 Sleep 500ms
 Up 2
 Sleep 500ms
 
-Enter
-
 Sleep 2s
 
 Enter
 
-Sleep 4s
+Sleep 5s
