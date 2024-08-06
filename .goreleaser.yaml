@@ -16,9 +16,10 @@ before:
     - go generate ./...
 
 builds:
-  - env:
-      - CGO_ENABLED=0
+  - id: bb
     binary: bb
+    env:
+      - CGO_ENABLED=0
     goos:
       - linux
       - windows
