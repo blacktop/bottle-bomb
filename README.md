@@ -1,5 +1,5 @@
 <p align="center">
-  <a href="https://github.com/blacktop/bottle-bomb"><img alt="BB Logo" src="https://raw.githubusercontent.com/blacktop/bottle-bomb/main/docs/logo.webp" height="140" /></a>
+  <a href="https://github.com/blacktop/bottle-bomb"><img alt="BB Logo" src="https://raw.githubusercontent.com/blacktop/bottle-bomb/main/docs/logo.webp" /></a>
   <h1 align="center">bottle-bomb</h1>
   <h4><p align="center">Homebrew Bottle Downloader</p></h4>
   <p align="center">
