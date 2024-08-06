@@ -44,17 +44,19 @@ Output vhs.gif
 Output vhs.mp4
 Output vhs.webm
 
-Set FontSize 20
+Set FontSize 22
 Set Width 1200
-Set Height 800
+Set Height 600
 Set PlaybackSpeed 2
 
 Type "bb bat"
 
 Sleep 2s
 
-Down 1
-Up 1
+Down 2
+Sleep 500ms
+Up 2
+Sleep 500ms
 
 Enter
 
@@ -62,4 +64,4 @@ Sleep 2s
 
 Enter
 
-Sleep 2s
+Sleep 4s
