@@ -33,11 +33,7 @@ go install github.com/blacktop/bottle-bomb@latest
 bottle-bomb bat
 ```
 
-```bash
-WARN Dependencies dep=libgit2@1.7
-WARN Dependencies dep=oniguruma
-INFO Creating file=bat.tar.gz
-```
+![demo](vhs.gif)
 
 ## License
 
