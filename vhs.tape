@@ -49,7 +49,7 @@ Set Width 1200
 Set Height 600
 Set PlaybackSpeed 2
 
-Type "bb bat"
+Type "echo bat"
 
 Sleep 500ms
 
