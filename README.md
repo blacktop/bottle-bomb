@@ -4,9 +4,13 @@
 
 ## Getting Started
 
+### Install
+
 ```bash
 go install github.com/blacktop/bottle-bomb@latest
 ```
+
+### Download `bat` bottle
 
 ```bash
 bottle-bomb bat
