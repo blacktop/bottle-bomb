@@ -279,7 +279,7 @@ func (m model) downloadBottle() tea.Msg {
 		},
 	}
 	// Start the download
-	go m.pw.Start()
+	m.pw.Start()
 
-	return m.pw.onProgress
+	return progressMsg(100.0)
 }

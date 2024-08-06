@@ -87,7 +87,9 @@ var rootCmd = &cobra.Command{
 		}
 
 		// Start Bubble Tea
-		if _, err := tea.NewProgram(initialModel(formula)).Run(); err != nil {
+		p = tea.NewProgram(initialModel(formula))
+
+		if _, err := p.Run(); err != nil {
 			fmt.Println("error running program:", err)
 			os.Exit(1)
 		}
