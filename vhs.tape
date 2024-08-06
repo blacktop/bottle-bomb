@@ -52,6 +52,7 @@ Set PlaybackSpeed 2
 Type "echo bat"
 Type "bb bat"
 Type "bottle-bomb bat"
+Type "echo '✅ Done!'"
 
 Sleep 500ms
 
