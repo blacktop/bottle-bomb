@@ -13,7 +13,6 @@
           <img src="https://img.shields.io/:license-mit-blue.svg" /></a>
 </p>
 <br>
-> Homebrew bottle downloader
 
 ## Getting Started
 
