@@ -50,6 +50,8 @@ Set Height 600
 Set PlaybackSpeed 2
 
 Type "echo bat"
+Type "bb bat"
+Type "bottle-bomb bat"
 
 Sleep 500ms
 
