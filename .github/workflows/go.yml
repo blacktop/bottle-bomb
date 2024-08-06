@@ -6,6 +6,12 @@ name: Go
 on:
   push:
     branches: [ "main" ]
+    paths-ignore:
+      - "*.md"
+      - "*.tape"
+      - ".github/workflows/goreleaser.yml"
+      - ".github/workflows/vhs.yml"
+
   pull_request:
     branches: [ "main" ]
 
