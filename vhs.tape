@@ -49,10 +49,11 @@ Set Width 1200
 Set Height 600
 Set PlaybackSpeed 2
 
-Type "echo bat"
-Type "bb bat"
 Type "bottle-bomb bat"
-Type "echo '✅ Done!'"
+
+Sleep 500ms
+
+Enter
 
 Sleep 500ms
 
