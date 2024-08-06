@@ -1,2 +1,6 @@
 # bottle-bomb
-Homebrew bottle downloader
+
+> Homebrew bottle downloader
+
+## Getting Started
+
