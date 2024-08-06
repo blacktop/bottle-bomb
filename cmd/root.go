@@ -73,7 +73,7 @@ var rootCmd = &cobra.Command{
 			}
 		}
 
-		if formula.Bottle.Stable.Files.Arm64Sonoma == nil {
+		if formula.Bottle.Stable.Files.Arm64Sonoma.URL == "" {
 			logger.Fatal("No bottle for macOS Sonoma (arm64)")
 		}
 
