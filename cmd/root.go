@@ -28,6 +28,8 @@ import (
 	"net/http"
 	"os"
 
+	"github.com/charmbracelet/bubbles/progress"
+	tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/log"
 	"github.com/spf13/cobra"
 )
@@ -87,21 +89,37 @@ var rootCmd = &cobra.Command{
 			panic(err)
 		}
 		defer resp.Body.Close()
-		logger.Info("Creating", "file", fmt.Sprintf("%s.tar.gz", args[0]))
+
 		f, err := os.Create(args[0] + ".tar.gz")
 		if err != nil {
 			panic(err)
 		}
 		defer f.Close()
-		_, err = io.Copy(f, resp.Body)
-		if err != nil {
-			panic(err)
+
+		pw := &progressWriter{
+			total:  int(resp.ContentLength),
+			file:   f,
+			reader: resp.Body,
+			onProgress: func(ratio float64) {
+				p.Send(progressMsg(ratio))
+			},
 		}
-		// var bottle Bottle
-		// if err := json.Unmarshal(body, &bottle); err != nil {
-		// 	panic(err)
-		// }
-		// fmt.Println(bottle)
+
+		m := model{
+			pw:       pw,
+			progress: progress.New(progress.WithDefaultGradient()),
+		}
+		// Start Bubble Tea
+		p = tea.NewProgram(m)
+
+		// Start the download
+		go pw.Start()
+
+		if _, err := p.Run(); err != nil {
+			fmt.Println("error running program:", err)
+			os.Exit(1)
+		}
+		logger.Info("Creating", "file", fmt.Sprintf("%s.tar.gz", args[0]))
 	},
 }
 
