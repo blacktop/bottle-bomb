@@ -4,7 +4,7 @@
   <h4><p align="center">Homebrew Bottle Downloader</p></h4>
   <p align="center">
     <a href="https://github.com/blacktop/bottle-bomb/actions" alt="Actions">
-          <img src="https://github.com/blacktop/bottle-bomb/actions/workflows/goreleaser.yml/badge.svg" /></a>
+          <img src="https://github.com/blacktop/bottle-bomb/actions/workflows/go.yml/badge.svg" /></a>
     <a href="https://github.com/blacktop/bottle-bomb/releases/latest" alt="Downloads">
           <img src="https://img.shields.io/github/downloads/blacktop/bottle-bomb/total.svg" /></a>
     <a href="https://github.com/blacktop/bottle-bomb/releases" alt="GitHub Release">
