@@ -46,7 +46,7 @@ Output vhs.webm
 
 Set FontSize 22
 Set Width 1200
-Set Height 500
+Set Height 600
 Set PlaybackSpeed 2
 
 Type "bb bat"
