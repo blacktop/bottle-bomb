@@ -16,7 +16,7 @@
 
 ## Why? 🤔
 
-Sometimes I want to use [homebrew](https://brew.sh) to quickly grab something, in a VM for example, and don't want to have to install the WHOLE client.
+Sometimes I want to use [homebrew](https://brew.sh) to quickly grab something, in a VM for example, and don't want to have to install the *WHOLE* client.
 
 
 ## Getting Started
