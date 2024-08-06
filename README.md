@@ -1,10 +1,10 @@
 <p align="center">
-  <a href="https://github.com/blacktop/bottle-bomb"><img alt="BB Logo" src="https://github.com/blacktop/bottle-bomb/raw/master/docs/logo.webp" height="140" /></a>
+  <a href="https://github.com/blacktop/bottle-bomb"><img alt="BB Logo" src="https://raw.githubusercontent.com/blacktop/bottle-bomb/main/docs/logo.webp" height="140" /></a>
   <h1 align="center">bottle-bomb</h1>
   <h4><p align="center">Homebrew Bottle Downloader</p></h4>
   <p align="center">
     <a href="https://github.com/blacktop/bottle-bomb/actions" alt="Actions">
-          <img src="https://github.com/blacktop/bottle-bomb/actions/workflows/goreleaser.yml/badge.svg?branch=main" /></a>
+          <img src="https://github.com/blacktop/bottle-bomb/actions/workflows/goreleaser.yml/badge.svg" /></a>
     <a href="https://github.com/blacktop/bottle-bomb/releases/latest" alt="Downloads">
           <img src="https://img.shields.io/github/downloads/blacktop/bottle-bomb/total.svg" /></a>
     <a href="https://github.com/blacktop/bottle-bomb/releases" alt="GitHub Release">
