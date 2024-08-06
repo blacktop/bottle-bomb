@@ -17,7 +17,10 @@ jobs:
         with:
           go-version: "stable"
       - name: Build
-        run: make build
+        run: |
+          make build
+          ls -lah
+          cwd
       - uses: charmbracelet/vhs-action@v2
         with:
           path: 'vhs.tape'
