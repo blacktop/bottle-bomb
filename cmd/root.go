@@ -88,11 +88,11 @@ var rootCmd = &cobra.Command{
 			return fmt.Errorf("failed to get formula '%s': %w", args[0], err)
 		}
 
-		if len(formula.Dependencies) > 0 {
-			for _, dep := range formula.Dependencies {
-				logger.Warn("Dependencies", "dep", dep)
-			}
-		}
+		// if len(formula.Dependencies) > 0 {
+		// 	for _, dep := range formula.Dependencies {
+		// 		logger.Warn("Dependencies", "dep", dep)
+		// 	}
+		// }
 
 		// Start Bubble Tea
 		// p = tea.NewProgram(initialModel(formula), tea.WithAltScreen())
