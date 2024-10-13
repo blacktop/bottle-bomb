@@ -38,30 +38,37 @@ const (
 	bottleAPI = "https://ghcr.io/v2/homebrew/core/%s/manifests/%s" // 1st %s is the formula name; 2nd %s is the version
 )
 
-var logger *log.Logger
+var (
+	logger *log.Logger
+	p      *tea.Program
+)
 
 func getFormula(in string) (*Formula, error) {
 	req, err := http.NewRequest("GET", fmt.Sprintf(brewAPI, in), nil)
 	if err != nil {
-		panic(err)
+		return nil, fmt.Errorf("failed to create request: %w", err)
 	}
 	// req.Header.Add("Authorization", "Bearer QQ==")
 	// req.Header.Set("Accept", "application/vnd.oci.image.index.v1+json")
 	req.Header.Set("Accept", "application/json")
 	resp, err := http.DefaultClient.Do(req)
 	if err != nil {
-		panic(err)
+		return nil, fmt.Errorf("failed to http GET: %w", err)
 	}
 	defer resp.Body.Close()
 
+	if resp.StatusCode != http.StatusOK {
+		return nil, fmt.Errorf("%s", resp.Status)
+	}
+
 	body, err := io.ReadAll(resp.Body)
 	if err != nil {
-		panic(err)
+		return nil, fmt.Errorf("failed to read response body: %w", err)
 	}
 
 	var formula Formula
 	if err := json.Unmarshal(body, &formula); err != nil {
-		panic(err)
+		return nil, fmt.Errorf("failed to unmarshal formula: %w", err)
 	}
 
 	return &formula, nil
@@ -69,14 +76,16 @@ func getFormula(in string) (*Formula, error) {
 
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
-	Use:   "bottle-bomb <formula>",
-	Short: "Download a homebrew bottle and install it",
-	Args:  cobra.ExactArgs(1),
-	Run: func(cmd *cobra.Command, args []string) {
+	Use:           "bottle-bomb <formula>",
+	Short:         "Download a homebrew bottle and install it",
+	Args:          cobra.ExactArgs(1),
+	SilenceErrors: true,
+	SilenceUsage:  true,
+	RunE: func(cmd *cobra.Command, args []string) error {
 
 		formula, err := getFormula(args[0])
 		if err != nil {
-			panic(err)
+			return fmt.Errorf("failed to get formula '%s': %w", args[0], err)
 		}
 
 		if len(formula.Dependencies) > 0 {
@@ -86,23 +95,29 @@ var rootCmd = &cobra.Command{
 		}
 
 		// Start Bubble Tea
+		// p = tea.NewProgram(initialModel(formula), tea.WithAltScreen())
 		p = tea.NewProgram(initialModel(formula))
 
-		if _, err := p.Run(); err != nil {
-			fmt.Println("error running program:", err)
-			os.Exit(1)
+		m, err := p.Run()
+		if err != nil {
+			return fmt.Errorf("failed to run program: %w", err)
+		}
+		if m, ok := m.(Model); ok {
+			if m.state == stateDownloading {
+				logger.Info("Creating", "file", fmt.Sprintf("%s.tar.gz", formula.Name))
+			}
 		}
 
-		logger.Info("Creating", "file", fmt.Sprintf("%s.tar.gz", formula.Name))
+		return nil
 	},
 }
 
 // Execute adds all child commands to the root command and sets flags appropriately.
 // This is called by main.main(). It only needs to happen once to the rootCmd.
 func Execute() {
-	err := rootCmd.Execute()
-	if err != nil {
-		os.Exit(1)
+	if err := rootCmd.Execute(); err != nil {
+		logger.Error(err.Error())
+		// os.Exit(1)
 	}
 }
 
@@ -115,5 +130,5 @@ func init() {
 
 	// Cobra also supports local flags, which will only run
 	// when this action is called directly.
-	rootCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
+	// rootCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 }
