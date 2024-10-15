@@ -24,6 +24,12 @@ Sometimes I want to use [homebrew](https://brew.sh) to quickly grab something, i
 ### Install
 
 ```bash
+brew install blacktop/tap/bottle-bomb
+```
+
+Or
+
+```bash
 go install github.com/blacktop/bottle-bomb@latest
 ```
 
