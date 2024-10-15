@@ -45,6 +45,18 @@ archives:
       - goos: windows
         format: zip
 
+brews:
+  - repository:
+      owner: blacktop
+      name: homebrew-tap
+    directory: Formula
+    goarm: "7"
+    homepage: https://github.com/blacktop/bottle-bomb
+    description: Homebrew Bottle Downloader
+    license: MIT
+    test: |
+      system "#{bin}/bb --help"
+
 changelog:
   sort: asc
   use: github
