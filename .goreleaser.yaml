@@ -49,6 +49,7 @@ brews:
   - repository:
       owner: blacktop
       name: homebrew-tap
+      token: "{{ .Env.HOMEBREW_TAP_GITHUB_TOKEN }}"
     directory: Formula
     goarm: "7"
     homepage: https://github.com/blacktop/bottle-bomb
